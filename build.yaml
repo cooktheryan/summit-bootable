@@ -4,24 +4,7 @@
   collections:
     - containers.podman
   tasks:
-  - name: run the above as a podman kubernetes pod
-    containers.podman.podman_pod:
-      name: osbuild
+  - name: run the build in a kubernetes pod
+    containers.podman.podman_play:
+      kube_file: podman_os_play.yaml
       state: started
-      containers:
-        - name: osbuild
-          security_context:
-            privileged: true
-            capabilities:
-              add:
-                - SYS_CHROOT
-                - SETFCAP
-                - SETGID
-                - SETUID
-                - SYS_ADMIN
-              selinuxOptions:
-                type: spc_t
-          image: quay.io/rcook/bootc:latest
-          command: ["--type", "ami", "--aws-ami-name", "centos-bootc-x86-rc", "--aws-bucket", "somaltest", "--aws-region", "us-east-1", "--target-arch", "x86_64", "quay.io/rcook/useradd:latest"]
-          volumes:
-          - /Users/rcook/.aws:/root/.aws
