@@ -1,14 +1,9 @@
 ---
 - hosts: localhost
-  become: true
+  become: false
   collections:
     - containers.podman
   tasks:
-  - name: ensure podman is installed
-    package:
-      name: podman
-      state: present
-
   - name: podman build ami
     containers.podman.podman_container:
       name: myapplication
