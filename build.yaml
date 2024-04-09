@@ -1,11 +1,11 @@
 ---
 - hosts: localhost
-  become: false
+  become: true
   collections:
     - containers.podman
   tasks:
   - name: ensure podman is installed
-    yum:
+    package:
       name: podman
       state: present
 
