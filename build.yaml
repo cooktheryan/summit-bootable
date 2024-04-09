@@ -4,12 +4,11 @@
   collections:
     - containers.podman
   tasks:
-  - name: podman install
-    shell: microdnf install -y podman
-
   - name: podman build ami
     containers.podman.podman_container:
-      name: myapplication
+      name: osbuild
+      cap_add: ["SYS_CHROOT", "SETFCAP", "SETGID", "SETUID"]
+      selinux_opts: "spc_t"
       image: quay.io/rcook/bootc:latest
       state: started
       privileged: true
