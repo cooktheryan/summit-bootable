@@ -5,7 +5,7 @@
     - containers.podman
   tasks:
   - name: ensure podman is installed
-    package:
+    dnf:
       name: podman
       state: present
 
