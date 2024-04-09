@@ -4,6 +4,11 @@
   collections:
     - containers.podman
   tasks:
+  - name: install podman
+    package:
+      name: podman
+      state: present
+
   - name: run the build in a kubernetes pod
     containers.podman.podman_play:
       kube_file: podman_os_play.yaml
