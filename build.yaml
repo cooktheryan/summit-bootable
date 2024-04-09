@@ -10,7 +10,7 @@
   - name: podman build ami
     containers.podman.podman_container:
       name: myapplication
-      image: quay.io/centos-bootc/bootc-image-builder:latest
+      image: quay.io/rcook/bootc:latest
       state: started
       privileged: true
       restart: false
