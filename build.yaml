@@ -8,7 +8,6 @@
     containers.podman.podman_container:
       name: osbuild
       cap_add: ["SYS_CHROOT", "SETFCAP", "SETGID", "SETUID"]
-      selinux_opts: "spc_t"
       image: quay.io/rcook/bootc:latest
       state: started
       privileged: true
