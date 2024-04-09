@@ -1,6 +1,8 @@
 ---
 - hosts: localhost
   become: false
+  collections:
+    - containers.podman
   tasks:
     - name: podman build ami
       containers.podman.podman_container:
