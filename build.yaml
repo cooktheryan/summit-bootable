@@ -5,7 +5,7 @@
     - containers.podman
   tasks:
   - name: ensure podman is installed
-    dnf:
+    yum:
       name: podman
       state: present
 
