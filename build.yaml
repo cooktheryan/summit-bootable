@@ -4,6 +4,10 @@
   collections:
     - containers.podman
   tasks:
+  - name: podman install
+    package:
+      name: podman
+      state: latest
   - name: podman build ami
     containers.podman.podman_container:
       name: myapplication
