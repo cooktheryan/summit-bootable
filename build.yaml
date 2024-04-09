@@ -7,7 +7,7 @@
   - name: podman build ami
     containers.podman.podman_container:
       name: osbuild
-      cap_add: ["SYS_CHROOT", "SETFCAP", "SETGID", "SETUID"]
+      cap_add: ["ALL"]
       image: quay.io/rcook/bootc:latest
       state: started
       privileged: true
