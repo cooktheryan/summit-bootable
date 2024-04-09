@@ -1,5 +1,5 @@
 ---
-- hosts: build_farm
+- hosts: 35.175.191.132
   become: false
   collections:
     - containers.podman
