@@ -1,5 +1,5 @@
 ---
-- hosts: 35.175.191.132
+- hosts: localhost
   become: true
   gather_facts: true
   collections:
@@ -36,7 +36,6 @@
   - name: podman build ami
     containers.podman.podman_container:
       name: osbuild
-      cap_add: ["SYS_CHROOT", "SETFCAP", "SETGID", "SETUID", "SYS_ADMIN"]
       image: quay.io/rcook/bootc:latest
       state: started
       privileged: true
@@ -45,3 +44,21 @@
       command: ["--type", "ami", "--aws-ami-name", "centos-bootc-x86-rc", "--aws-bucket", "somaltest", "--aws-region", "us-east-1", "--target-arch", "x86_64", "quay.io/rcook/useradd:latest"]
       volumes:
       - "/{{ ansible_user_id }}/.aws:/root/.aws"
+
+  - name: Wait for osbuild container to exit
+    containers.podman.podman_container_info:
+      name: osbuild
+    register: container_info
+    until: container_info.container.State.Status != 'running'
+    retries: 60
+    delay: 10
+
+  - block:
+    - name: Check if container exited with status 0
+      assert:
+        that: container_info.container.State.ExitCode == 0
+        fail_msg: "Container exited with error"
+    rescue:
+    - name: Stop the playbook if container exited with error
+      fail:
+        msg: "Container exited with error"
