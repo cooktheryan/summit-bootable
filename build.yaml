@@ -44,4 +44,4 @@
       restart_policy: "no"
       command: ["--type", "ami", "--aws-ami-name", "centos-bootc-x86-rc", "--aws-bucket", "somaltest", "--aws-region", "us-east-1", "--target-arch", "x86_64", "quay.io/rcook/useradd:latest"]
       volumes:
-      - "{{ ansible_user_id }}/.aws:/root/.aws"
+      - "/{{ ansible_user_id }}/.aws:/root/.aws"
