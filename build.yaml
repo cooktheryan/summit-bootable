@@ -1,6 +1,6 @@
 ---
 - hosts: 35.175.191.132
-  become: false
+  become: true
   collections:
     - containers.podman
   tasks:
