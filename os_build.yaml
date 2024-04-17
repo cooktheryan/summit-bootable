@@ -45,20 +45,29 @@
       volumes:
       - "/{{ ansible_user_id }}/.aws:/root/.aws"
 
-  - name: Wait for osbuild container to exit
-    containers.podman.podman_container_info:
-      name: osbuild
-    register: container_info
-    until: container_info.container.State.Status != 'running'
-    retries: 300
-    delay: 10
+- name: Get osbuild container info
+  containers.podman.podman_container_info:
+    name: osbuild
+  register: container_info
 
-  - block:
-    - name: Check if container exited with status 0
-      assert:
-        that: container_info.container.State.ExitCode == 0
-        fail_msg: "Container exited with error"
-    rescue:
-    - name: Stop the playbook if container exited with error
-      fail:
-        msg: "Container exited with error"
+- name: Wait for osbuild container to exit
+  command: sleep 10
+  register: result
+  until: container_info.containers[0].State.Status != 'running' if container_info.containers else true
+  retries: 60
+  delay: 10
+
+- block:
+  - name: Check if container exited with status 0
+    assert:
+      that: container_info.container.State.ExitCode == 0
+      fail_msg: "Container exited with error"
+  rescue:
+  - name: Stop the playbook if container exited with error
+    fail:
+      msg: "Container exited with error"
+  always:
+  - name: Remove the container
+    containers.podman.podman_container:
+      name: osbuild
+      state: absent
