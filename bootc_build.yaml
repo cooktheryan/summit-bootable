@@ -23,4 +23,4 @@
         extra_args: "--build-arg sshpubkey={{ pubKey}}"
       push: true
       push_args:
-        dest: "{{ registry }}/{{ image }}:latest"
+        dest: "{{ registry }}/{{ image }}/{{ appName }}:latest"
