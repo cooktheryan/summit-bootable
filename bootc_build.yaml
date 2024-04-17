@@ -24,3 +24,7 @@
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}/{{ appName }}:latest"
+
+  - name: set the image tag
+    set_stats:
+      image: "{{ registry }}/{{ image }}/{{ appName }}:latest"
