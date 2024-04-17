@@ -13,10 +13,14 @@
   - name: Clone the application repo
     git:
       repo: "{{ repo }}"
+      dest: "/tmp/app"
 
   - name: build the containerfile
     containers.podman.podman_image:
       name: bootc
+      path: "/tmp/app/{{ path }}"
+      build:
+        extra_args: "--build-arg sshpubkey={{ pubKey}}"
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}"
