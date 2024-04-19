@@ -30,4 +30,4 @@
     set_stats:
       data:
         image: "{{ registry }}/{{ image }}/{{ appName }}:latest"
-        revison: "{{ clone.after }}"
+        revision: "{{ clone.after }}"
