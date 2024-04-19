@@ -52,3 +52,13 @@
     until: container_info.containers[0].State.Running != true
     retries: 60
     delay: 30
+
+  - name: fail if osbuild container failed
+    fail:
+      msg: "osbuild container failed"
+    when: container_info.containers[0].State.ExitCode != 0
+
+  - name: remove the osbuild container
+    containers.podman.podman_container:
+      name: osbuild
+      state: absent
