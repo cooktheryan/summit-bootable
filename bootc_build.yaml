@@ -1,5 +1,5 @@
 ---
-- hosts: amd
+- hosts: builder.octo-emerging.redhataicoe.com
   become: true
   gather_facts: true
   collections:
