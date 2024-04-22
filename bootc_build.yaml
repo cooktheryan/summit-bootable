@@ -45,5 +45,5 @@
 
   - name: clean up the image
     containers.podman.podman_image:
-      name: "{{ pushed_image }}"
+      name: "{{ registry }}/{{ image }}/{{ appName }}:latest"
       state: absent
