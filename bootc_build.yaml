@@ -45,5 +45,8 @@
 
   - name: clean up the image
     containers.podman.podman_image:
-      name: "{{ registry }}/{{ image }}/{{ appName }}:latest"
+      name: "{{ item }}"
       state: absent
+    with_items:
+      - "{{ registry }}/{{ image }}/{{ appName }}:latest"
+      - "localhost/{{ appName }}:latest"
