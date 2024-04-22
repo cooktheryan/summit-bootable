@@ -42,3 +42,8 @@
       data:
         pushed_image: "{{ registry }}/{{ image }}/{{ appName }}:latest"
         revision: "{{ clone.after }}"
+
+  - name: clean up the image
+    containers.podman.podman_image:
+      name: "{{ pushed_image }}"
+      state: absent

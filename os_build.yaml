@@ -41,7 +41,7 @@
       privileged: true
       restart: false
       restart_policy: "no"
-      command: ["--type", "ami", "--aws-ami-name", "bootc-{{ revision }}", "--aws-bucket", "{{ bucket }}", "--aws-region", "{{ region }}", "--target-arch", "{{ arch }}", "{{ pushed_image }}"]
+      command: ["--type", "ami", "--aws-ami-name", "bootc-{{appName}}-{{ revision }}", "--aws-bucket", "{{ bucket }}", "--aws-region", "{{ region }}", "--target-arch", "{{ arch }}", "{{ pushed_image }}"]
       volumes:
       - "/{{ ansible_user_id }}/.aws:/root/.aws"
 
@@ -53,13 +53,14 @@
     retries: 60
     delay: 30
 
-  block:
-    - name: fail if "{{ appName }}" container failed
-      fail:
-        msg: "{{ appName }} container failed"
-      when: container_info.containers[0].State.ExitCode != 0
-  always:
-    - name: remove the "{{ appName }}" container
-      containers.podman.podman_container:
-        name: "{{ appName }}"
-        state: absent
+  - name: fail if "{{ appName }}" container failed or cleanup if success
+    block:
+      - name: fail if "{{ appName }}" container failed
+        fail:
+          msg: "{{ appName }} container failed"
+        when: container_info.containers[0].State.ExitCode != 0
+    always:
+      - name: remove the "{{ appName }}" container
+        containers.podman.podman_container:
+          name: "{{ appName }}"
+          state: absent
