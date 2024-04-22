@@ -41,7 +41,7 @@
       privileged: true
       restart: false
       restart_policy: "no"
-      command: ["--type", "ami", "--aws-ami-name", "bootc-{{ revision }}", "--aws-bucket", "{{ bucket }}", "--aws-region", "{{ region }}", "--target-arch", "{{ arch }}", "{{ image }}"]
+      command: ["--type", "ami", "--aws-ami-name", "bootc-{{ revision }}", "--aws-bucket", "{{ bucket }}", "--aws-region", "{{ region }}", "--target-arch", "{{ arch }}", "{{ pushed_image }}"]
       volumes:
       - "/{{ ansible_user_id }}/.aws:/root/.aws"
 

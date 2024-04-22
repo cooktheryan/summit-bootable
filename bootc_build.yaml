@@ -40,5 +40,5 @@
   - name: set the image tag
     set_stats:
       data:
-        image: "{{ registry }}/{{ image }}/{{ appName }}:latest"
+        pushed_image: "{{ registry }}/{{ image }}/{{ appName }}:latest"
         revision: "{{ clone.after }}"
