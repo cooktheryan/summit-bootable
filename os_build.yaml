@@ -35,7 +35,7 @@
 
   - name: podman build ami
     containers.podman.podman_container:
-      name: osbuild
+      name: "{{ appName }}"
       image: quay.io/centos-bootc/bootc-image-builder:latest
       state: started
       privileged: true
@@ -45,20 +45,21 @@
       volumes:
       - "/{{ ansible_user_id }}/.aws:/root/.aws"
 
-  - name: Wait for osbuild container to exit
+  - name: Wait for "{{ appName }}" container to exit
     containers.podman.podman_container_info:
-      name: osbuild
+      name: "{{ appName }}"
     register: container_info
     until: container_info.containers[0].State.Running != true
     retries: 60
     delay: 30
 
-  - name: fail if osbuild container failed
-    fail:
-      msg: "osbuild container failed"
-    when: container_info.containers[0].State.ExitCode != 0
-
-  - name: remove the osbuild container
-    containers.podman.podman_container:
-      name: osbuild
-      state: absent
+  block:
+    - name: fail if "{{ appName }}" container failed
+      fail:
+        msg: "{{ appName }} container failed"
+      when: container_info.containers[0].State.ExitCode != 0
+  always:
+    - name: remove the "{{ appName }}" container
+      containers.podman.podman_container:
+        name: "{{ appName }}"
+        state: absent
