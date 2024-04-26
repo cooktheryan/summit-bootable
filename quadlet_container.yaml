@@ -22,6 +22,11 @@
       push_args:
         dest: "{{ registry }}/{{ image }}"
 
+  - name: make the directory for quadlets
+    ansible.builtin.file:
+      path: "/tmp/app/{{ path }}/quadlet"
+      state: directory
+
   - name: write a new file to the quadlet directory
     ansible.builtin.copy:
       content: |
