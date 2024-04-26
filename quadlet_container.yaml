@@ -38,9 +38,12 @@
         WantedBy=multi-user.target default.target
       dest: "/tmp/app/{{ path }}/quadlet/httpd.container"
 
+  - name: Copy the quadlet file above to debug
+    shell: "cp /tmp/app/{{ path }}/quadlet/httpd.container /tmp/quadlet"
+
   - name: Generate the application bootc image
     containers.podman.podman_image:
-      name: "bootc-{{ appName}}:{{ clone.after }}"
+      name: "bootc-{{ appName}}:latest"
       build:
         file: "quadlet-Containerfile"
       path: "/tmp/app/{{ path }}"
