@@ -55,5 +55,6 @@
 
   - name: pass the revision and image to the next job
     set_stats:
-      revision: "{{ clone.after }}"
-      image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+      data:
+        revision: "{{ clone.after }}"
+        image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
