@@ -22,16 +22,16 @@
       push_args:
         dest: "{{ registry }}/{{ image }}"
 
-  - name: define the quadlet file
-    containers.podman.podman_image:
-      name: "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
-      state: quadlet
-      quadlet_dir: "/tmp/app/{{ path }}/quadlet"
-      quadlet_filename: "{{ appName }}.container"
-      quadlet_options:
-      - |
+  - name: write a new file to the quadlet directory
+    ansible.builtin.copy:
+      content: |
+        [Container]
+        Image="{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+        PublishPort=8080:8080
+
         [Install]
         WantedBy=multi-user.target default.target
+      dest: "/tmp/app/{{ path }}/quadlet/httpd.container"
 
   - name: Generate the application bootc image
     containers.podman.podman_image:
