@@ -43,7 +43,6 @@
       push_args:
         dest: "{{ registry }}/{{ image }}"
 
-
   - name: clean up the image
     containers.podman.podman_image:
       name: "{{ item }}"
@@ -53,3 +52,8 @@
       - "localhost/{{ appName }}:latest"
       - "localhost/bootc-{{ appName }}:latest"
       - "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+
+  - name: pass the revision and image to the next job
+    set_stat:
+      revision: "{{ clone.after }}"
+      image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
