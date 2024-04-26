@@ -19,13 +19,13 @@
 
   - name: build the containerfile
     containers.podman.podman_image:
-      name: "{{ appName}}"
+      name: "{{ appName}}:{{ clone.after }}"
       build:
         file: "/tmp/app/{{ path }}/Containerfile"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
-        dest: "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+        dest: "{{ registry }}/{{ image }}"
 
   - name: Generate the httpd quadlet template
     template:
@@ -34,13 +34,13 @@
 
   - name: Generate the application bootc image
     containers.podman.podman_image:
-      name: "bootc-{{ appName}}"
+      name: "bootc-{{ appName}}:{{ clone.after }}"
       build:
         file: "quadlet/{{ appName }}.container"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
-        dest: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+        dest: "{{ registry }}/{{ image }}"
 
 
   - name: clean up the image
