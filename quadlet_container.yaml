@@ -20,7 +20,8 @@
   - name: build the containerfile
     containers.podman.podman_image:
       name: "{{ appName}}"
-      file: "/tmp/app/{{ path }}/Containerfile"
+      build:
+        file: "/tmp/app/{{ path }}/Containerfile"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
@@ -34,7 +35,8 @@
   - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "bootc-{{ appName}}"
-      file: "quadlet/{{ appName }}.container"
+      build:
+        file: "quadlet/{{ appName }}.container"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
