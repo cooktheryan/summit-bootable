@@ -1,0 +1,52 @@
+---
+- hosts: builder.octo-emerging.redhataicoe.com
+  become: true
+  gather_facts: true
+  remote_user: ec2-user
+  collections:
+    - containers.podman
+  tasks:
+  - name: install podman
+    package:
+      name: podman
+      state: present
+
+  - name: Clone the application repo
+    git:
+      repo: "{{ repo }}"
+      dest: "/tmp/app"
+    register: clone
+
+  - name: build the containerfile
+    containers.podman.podman_image:
+      name: "{{ appName}}"
+      file: "/tmp/app/{{ path }}/Containerfile"
+      path: "/tmp/app/{{ path }}"
+      push: true
+      push_args:
+        dest: "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+
+  - name: Generate the httpd quadlet template
+    template:
+      src: "/tmp/app/{{ path }}/quadlet_container.yaml"
+      dest: "quadlet/{{ appName }}.container"
+
+  - name: Generate the application bootc image
+    containers.podman.podman_image:
+      name: "bootc-{{ appName}}"
+      file: "quadlet/{{ appName }}.container"
+      path: "/tmp/app/{{ path }}"
+      push: true
+      push_args:
+        dest: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+
+
+  - name: clean up the image
+    containers.podman.podman_image:
+      name: "{{ item }}"
+      state: absent
+    with_items:
+      - "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+      - "localhost/{{ appName }}:latest"
+      - "localhost/bootc-{{ appName }}:latest"
+      - "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
