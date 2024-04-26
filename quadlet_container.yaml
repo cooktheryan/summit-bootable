@@ -31,7 +31,7 @@
     ansible.builtin.copy:
       content: |
         [Container]
-        Image="{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+        Image={{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}
         PublishPort=8080:8080
 
         [Install]
