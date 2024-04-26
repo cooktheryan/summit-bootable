@@ -29,7 +29,7 @@
 
   - name: Generate the httpd quadlet template
     template:
-      src: "/tmp/app/{{ path }}/quadlet_container.yaml"
+      src: "/tmp/app/{{ path }}/templates/httpd.j2"
       dest: "quadlet/{{ appName }}.container"
 
   - name: Generate the application bootc image
