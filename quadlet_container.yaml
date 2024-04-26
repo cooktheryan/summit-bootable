@@ -58,6 +58,11 @@
       - "localhost/bootc-{{ appName }}:latest"
       - "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
 
+  - name: delete the cloned directory
+    ansible.builtin.file:
+      path: "/tmp/app"
+      state: absent
+
   - name: pass the revision and image to the next job
     set_stats:
       data:
