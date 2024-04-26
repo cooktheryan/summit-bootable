@@ -57,4 +57,4 @@
     set_stats:
       data:
         revision: "{{ clone.after }}"
-        image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+        pushed_image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
