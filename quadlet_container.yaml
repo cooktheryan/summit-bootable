@@ -38,18 +38,25 @@
         WantedBy=multi-user.target default.target
       dest: "/tmp/app/{{ path }}/quadlet/httpd.container"
 
-  - name: Copy the quadlet file above to debug
-    shell: "cp /tmp/app/{{ path }}/quadlet/httpd.container /tmp/quadlet"
-
   - name: Generate the application bootc image
     containers.podman.podman_image:
-      name: "bootc-{{ appName}}:latest"
+      name: "bootc-{{ appName}}:{{ clone.after }}"
       build:
         file: "quadlet-Containerfile"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}"
+
+  - name: tag images as latest
+    containers.podman.podman_tag:
+      image: "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+      target_name: "{{ registry }}/{{ image }}/{{ appName }}:latest"
+
+  - name: tag images as latest
+    containers.podman.podman_tag:
+      image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+      target_name: "{{ registry }}/{{ image }}/bootc-{{ appName }}:latest"
 
   - name: clean up the image
     containers.podman.podman_image:
@@ -60,6 +67,8 @@
       - "localhost/{{ appName }}:latest"
       - "localhost/bootc-{{ appName }}:latest"
       - "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+      - "{{ registry }}/{{ image }}/{{ appName }}:latest"
+      - "{{ registry }}/{{ image }}/bootc-{{ appName }}:latest"
 
   - name: delete the cloned directory
     ansible.builtin.file:
