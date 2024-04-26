@@ -37,7 +37,7 @@
     containers.podman.podman_image:
       name: "bootc-{{ appName}}:{{ clone.after }}"
       build:
-        file: "quadlet/{{ appName }}.container"
+        file: "quadlet-Containerfile"
       path: "/tmp/app/{{ path }}"
       push: true
       push_args:
