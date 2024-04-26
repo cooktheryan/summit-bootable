@@ -5,11 +5,6 @@
   collections:
     - containers.podman
   tasks:
-  - name: install podman
-    package:
-      name: podman
-      state: present
-
   - name: add the directory .aws to home
     file:
       path: ~/.aws

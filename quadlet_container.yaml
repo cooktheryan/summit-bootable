@@ -6,11 +6,6 @@
   collections:
     - containers.podman
   tasks:
-  - name: install podman
-    package:
-      name: podman
-      state: present
-
   - name: Clone the application repo
     git:
       repo: "{{ repo }}"
@@ -29,8 +24,9 @@
 
   - name: Generate the httpd quadlet template
     template:
+      remote_src: yes
       src: "/tmp/app/{{ path }}/templates/httpd.j2"
-      dest: "quadlet/{{ appName }}.container"
+      dest: "/tmp/app/{{ path }}/quadlet/{{ appName }}.container"
 
   - name: Generate the application bootc image
     containers.podman.podman_image:
