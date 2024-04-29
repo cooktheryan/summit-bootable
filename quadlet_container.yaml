@@ -64,8 +64,8 @@
     containers.podman.podman_image:
       name: "bootc-{{ appName}}:{{ clone.after }}"
       build:
-        file: "quadlet-Containerfile"
-      path: "/tmp/app/{{ path }}"
+        file: "Containerfile"
+      path: "/tmp/app/{{ path }}/bootc"
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}"
