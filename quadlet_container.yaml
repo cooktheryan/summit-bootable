@@ -50,12 +50,12 @@
 
   - name: tag images as latest
     containers.podman.podman_tag:
-      image: "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
+      image: "localhost/{{ appName }}:{{ clone.after }}"
       target_name: "{{ registry }}/{{ image }}/{{ appName }}:latest"
 
   - name: tag images as latest
     containers.podman.podman_tag:
-      image: "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
+      image: "localhost/bootc-{{ appName }}:{{ clone.after }}"
       target_name: "{{ registry }}/{{ image }}/bootc-{{ appName }}:latest"
 
   - name: clean up the image
