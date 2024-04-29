@@ -16,8 +16,8 @@
     containers.podman.podman_image:
       name: "{{ appName}}:{{ clone.after }}"
       build:
-        file: "/tmp/app/{{ path }}/Containerfile"
-      path: "/tmp/app/{{ path }}"
+        file: "/tmp/app/{{ path }}/{{ app_path }}/Containerfile"
+      path: "/tmp/app/{{ path }}/{{ app_path }}"
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}"
