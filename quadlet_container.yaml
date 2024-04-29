@@ -32,7 +32,6 @@
       src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.image.j2"
       dest: "/tmp/app/{{ path }}/bootc/build/chatbot.image"
       mode: 0644
-      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
@@ -44,7 +43,6 @@
       src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.kube.j2"
       dest: "/tmp/app/{{ path }}/bootc/build/chatbot.kube"
       mode: 0644
-      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
@@ -56,7 +54,6 @@
       src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.yaml.j2"
       dest: "/tmp/app/{{ path }}/bootc/build/chatbot.yaml"
       mode: 0644
-      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
