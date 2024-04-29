@@ -29,8 +29,8 @@
 
   - name: modify the template in the ansible-templates directory to include the new image
     ansible.builtin.template:
-      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.image.j2"
-      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.image"
+      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.image.j2"
+      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.image"
       mode: 0644
       remote_src: yes
       vars:
@@ -41,8 +41,8 @@
 
   - name: modify the template in the ansible-templates directory to include the new image
     ansible.builtin.template:
-      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.kube.j2"
-      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.kube"
+      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.kube.j2"
+      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.kube"
       mode: 0644
       remote_src: yes
       vars:
@@ -53,8 +53,8 @@
 
   - name: modify the template in the ansible-templates directory to include the new image
     ansible.builtin.template:
-      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.yaml.j2"
-      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.yaml"
+      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.yaml.j2"
+      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.yaml"
       mode: 0644
       remote_src: yes
       vars:
