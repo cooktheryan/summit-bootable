@@ -1,7 +1,7 @@
 ---
 - hosts: builder.octo-emerging.redhataicoe.com
-  become: true
-  gather_facts: true
+  become: false
+  gather_facts: false
   remote_user: ec2-user
   collections:
     - containers.podman
@@ -24,19 +24,41 @@
 
   - name: make the directory for quadlets
     ansible.builtin.file:
-      path: "/tmp/app/{{ path }}/quadlet"
+      path: "/tmp/app/{{ path }}/bootc/build"
       state: directory
 
-  - name: write a new file to the quadlet directory
-    ansible.builtin.copy:
-      content: |
-        [Container]
-        Image={{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}
-        PublishPort=8080:8080
+  - name: modify the template in the ansible-templates directory to include the new image
+    ansible.builtin.template:
+      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.image.j2"
+      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.image"
+      mode: 0644
+      vars:
+        appName: "{{ appName }}"
+        image: "{{ image }}"
+        registry: "{{ registry }}"
+        revision: "{{ clone.after }}"
 
-        [Install]
-        WantedBy=multi-user.target default.target
-      dest: "/tmp/app/{{ path }}/quadlet/httpd.container"
+  - name: modify the template in the ansible-templates directory to include the new image
+    ansible.builtin.template:
+      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.kube.j2"
+      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.kube"
+      mode: 0644
+      vars:
+        appName: "{{ appName }}"
+        image: "{{ image }}"
+        registry: "{{ registry }}"
+        revision: "{{ clone.after }}"
+
+  - name: modify the template in the ansible-templates directory to include the new image
+    ansible.builtin.template:
+      src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.yaml.j2"
+      dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.yaml"
+      mode: 0644
+      vars:
+        appName: "{{ appName }}"
+        image: "{{ image }}"
+        registry: "{{ registry }}"
+        revision: "{{ clone.after }}"
 
   - name: Generate the application bootc image
     containers.podman.podman_image:
