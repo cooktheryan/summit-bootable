@@ -32,6 +32,7 @@
       src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.image.j2"
       dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.image"
       mode: 0644
+      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
@@ -43,6 +44,7 @@
       src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.kube.j2"
       dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.kube"
       mode: 0644
+      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
@@ -54,6 +56,7 @@
       src: "/tmp/app/{{ path }}recipes/natural_language_processing/chatbot/bootc/ansible-templates/chatbot.yaml.j2"
       dest: "/tmp/app/{{ path }}/recipes/natural_language_processing/chatbot/bootc/build/chatbot.yaml"
       mode: 0644
+      remote_src: yes
       vars:
         appName: "{{ appName }}"
         image: "{{ image }}"
