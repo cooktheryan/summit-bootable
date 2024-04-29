@@ -1,7 +1,5 @@
 ---
 - hosts: builder.octo-emerging.redhataicoe.com
-  become: false
-  gather_facts: false
   remote_user: ec2-user
   collections:
     - containers.podman
@@ -27,38 +25,26 @@
       path: "/tmp/app/{{ path }}/bootc/build"
       state: directory
 
-  - name: modify the template in the ansible-templates directory to include the new image
-    ansible.builtin.template:
-      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.image.j2"
-      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.image"
-      mode: 0644
-      vars:
-        appName: "{{ appName }}"
-        image: "{{ image }}"
-        registry: "{{ registry }}"
-        revision: "{{ clone.after }}"
+  - name: Clone the application repo
+    git:
+      repo: "{{ repo }}"
+      dest: "/tmp/app"
+    delegate_to: localhost
 
   - name: modify the template in the ansible-templates directory to include the new image
     ansible.builtin.template:
-      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.kube.j2"
-      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.kube"
-      mode: 0644
-      vars:
-        appName: "{{ appName }}"
-        image: "{{ image }}"
-        registry: "{{ registry }}"
-        revision: "{{ clone.after }}"
-
-  - name: modify the template in the ansible-templates directory to include the new image
-    ansible.builtin.template:
-      src: "/tmp/app/{{ path }}/bootc/ansible-templates/chatbot.yaml.j2"
-      dest: "/tmp/app/{{ path }}/bootc/build/chatbot.yaml"
-      mode: 0644
-      vars:
-        appName: "{{ appName }}"
-        image: "{{ image }}"
-        registry: "{{ registry }}"
-        revision: "{{ clone.after }}"
+      src: "/tmp/app/{{ path }}/bootc/ansible-templates/{{ item[0] }}"
+        dest: "/tmp/app/{{ path }}/bootc/build/{{ item[1] }}"
+        mode: 0644
+        vars:
+          appName: "{{ appName }}"
+          image: "{{ image }}"
+          registry: "{{ registry }}"
+          revision: "{{ clone.after }}"
+      with_nested:
+        - [ 'chatbot.image.j2', 'chatbot.image' ]
+        - [ 'chatbot.kube.j2', 'chatbot.kube' ]
+        - [ 'chatbot.yaml.j2', 'chatbot.yaml' ]
 
   - name: Generate the application bootc image
     containers.podman.podman_image:
