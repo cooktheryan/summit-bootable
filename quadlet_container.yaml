@@ -63,6 +63,10 @@
   - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "bootc-{{ appName}}:{{ clone.after }}"
+      security_opts:
+        - "label=disable"
+      capabilities:
+        - CAP_SYS_ADMIN
       build:
         file: "Containerfile"
       path: "/tmp/app/{{ path }}/bootc"
