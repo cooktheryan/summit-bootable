@@ -77,6 +77,8 @@
       - "{{ registry }}/{{ image }}/{{ appName }}:{{ clone.after }}"
       - "localhost/{{ appName }}:latest"
       - "localhost/bootc-{{ appName }}:latest"
+      - "localhost/bootc-{{ appName }}:{{ clone.after }}"
+      - "localhost/{{ appName }}:{{ clone.after }}"
       - "{{ registry }}/{{ image }}/bootc-{{ appName }}:{{ clone.after }}"
       - "{{ registry }}/{{ image }}/{{ appName }}:latest"
       - "{{ registry }}/{{ image }}/bootc-{{ appName }}:latest"
