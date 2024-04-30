@@ -12,10 +12,6 @@
       dest: "/tmp/bootc"
     register: clone
 
-  - name: debug public key
-    debug:
-      var: PUBKEY
-
   - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "{{ appName}}"
