@@ -15,9 +15,8 @@
   - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "{{ appName}}"
-      build_args:
-        extra_args: "--build-arg sshpubkey=$(cat ~/.ssh/id_rsa.pub)"
       build:
+        extra_args: "--build-arg sshpubkey=$(cat ~/.ssh/id_rsa.pub)"
         file: "Containerfile"
       path: "/tmp/bootc/{{ path }}"
       push: true
