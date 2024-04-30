@@ -1,5 +1,5 @@
 ---
-- hosts: builder
+- hosts: build_farm
   remote_user: ec2-user
   become: true
   collections:
