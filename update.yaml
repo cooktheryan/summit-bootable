@@ -3,7 +3,7 @@
   become: true
   gather_facts: true
   tasks:
-  - name: trigger bootc swap if image was updated
+  - name: trigger bootc upgrade if image was updated
     command: "bootc upgrade --apply"
     when: image_pull.changed
 
