@@ -21,16 +21,6 @@
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}/{{ appName }}:latest"
-    when: pubKey is defined
-
-  - name: build the containerfile
-    containers.podman.podman_image:
-      name: "{{ appName}}"
-      path: "/tmp/app/{{ path }}"
-      push: true
-      push_args:
-        dest: "{{ registry }}/{{ image }}/{{ appName }}:latest"
-    when: pubKey is not defined
 
   - name: set the image tag
     set_stats:
