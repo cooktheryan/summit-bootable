@@ -16,7 +16,7 @@
     containers.podman.podman_image:
       name: "{{ appName}}"
       build:
-        extra_args: "--build-arg sshpubkey=$(cat ~/.ssh/id_rsa.pub)"
+        extra_args: "--build-arg sshpubkey={{ lookup('file', '~/.ssh/id_rsa.pub') | replace('\\n', '') | quote }}"
         file: "Containerfile"
       path: "/tmp/bootc/{{ path }}"
       push: true
