@@ -1,5 +1,5 @@
 ---
-- hosts: edge
+- hosts: 54.80.184.99
   become: true
   gather_facts: true
   tasks:
