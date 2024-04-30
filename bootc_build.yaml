@@ -16,7 +16,7 @@
     containers.podman.podman_image:
       name: "{{ appName}}"
       build:
-        extra_args: "--build-arg sshpubkey={{ PUB_KEY }}"
+        extra_args: "--build-arg sshpubkey=ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC370lElHJUJnuJgPCxfTYz5eJ2imIeSnXw0IoQiG0T/YXcMHQKPDg1xYJ9dwivoQDlDewLzXZh6Tmb2wsUe1CyVVjNpMWnmMV449/uF2SuGsZfoEswRH6iUuQN7ZGBDaqfJfU6rSTEuoT+6k8AMqbKqBFR4K+4yvSsVy0NZSdFaq8r4aT0FcBrkNazBzA+AOCPbS0ucOpANfdYseteSQ93HEbENoXh+4K9y2lDrWNnl6g66/8HFrpcWcNWjjv5eP60DEKCcVAd3XG5kic3UTCLzXRwCYWf2xuju729uplw+mNczEoeImhbYvt0Z5JWyV6A6xarnCmazr1aBr0FaM+/wd2OiwnSGJwRQ7I+7+aCEVtaqOKx4o9DhCJNBdamas57medqW4KGlSoXKb+k9tRK/obQe8/6KXdBnRmB7MT+5ZA+n26Vkh+ZWKau7V6HGpktd2Y0Qtpkj1kAlxA2fLek+nGGVqGi6yfMKbD4SjNncpTaVPj2xDrbsGQBpQlhtLM= rcook@goku"
         file: "Containerfile"
       path: "/tmp/bootc/{{ path }}"
       push: true
