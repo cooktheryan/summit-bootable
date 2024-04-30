@@ -5,7 +5,6 @@
   tasks:
   - name: trigger bootc upgrade if image was updated
     command: "bootc upgrade --apply"
-    when: image_pull.changed
 
   - name: reboot if image was updated
     command: "reboot"
