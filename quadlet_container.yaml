@@ -1,5 +1,5 @@
 ---
-- hosts: build_farm
+- hosts: builder.octo-emerging.redhataicoe.com
   remote_user: ec2-user
   become: true
   collections:
