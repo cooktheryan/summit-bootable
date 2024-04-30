@@ -9,18 +9,18 @@
   - name: Clone the application repo
     git:
       repo: "{{ repo }}"
-      dest: "/tmp/app"
+      dest: "/tmp/bootc"
     register: clone
 
-  - name: build the containerfile
+  - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "{{ appName}}"
-      path: "/tmp/app/{{ path }}"
       build:
-        extra_args: "--build-arg sshpubkey=cat $(cat ~/.ssh/id_rsa.pub)"
+        file: "Containerfile"
+      path: "/tmp/bootc/{{ path }}"
       push: true
       push_args:
-        dest: "{{ registry }}/{{ image }}/{{ appName }}:latest"
+        dest: "{{ registry }}/{{ image }}"
 
   - name: set the image tag
     set_stats:
