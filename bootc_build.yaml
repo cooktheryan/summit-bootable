@@ -16,7 +16,7 @@
     containers.podman.podman_image:
       name: "{{ appName}}"
       build:
-        extra_args: "--build-arg sshpubkey={{ PUBKEY | replace('"', '\\"') }}"
+        extra_args: "--build-arg sshpubkey=\"{{ PUBKEY | replace('"', '\\"') }}\""
         file: "Containerfile"
       path: "/tmp/bootc/{{ path }}"
       push: true
