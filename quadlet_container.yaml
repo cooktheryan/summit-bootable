@@ -47,6 +47,8 @@
       build:
         file: "Containerfile"
       path: "/tmp/app/{{ path }}/bootc"
+      build_args:
+        - "SSHPUBKEY={{ SSHPUBKEY }}"
       push: true
       push_args:
         dest: "{{ registry }}/{{ image }}"
