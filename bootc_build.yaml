@@ -1,8 +1,8 @@
 ---
 - hosts: builder.octo-emerging.redhataicoe.com
   become: true
-  gather_facts: true
   remote_user: ec2-user
+  gather_facts: true
   collections:
     - containers.podman
   tasks:
@@ -12,11 +12,15 @@
       dest: "/tmp/bootc"
     register: clone
 
+  - name: debug public key
+    debug:
+      var: PUBKEY
+
   - name: Generate the application bootc image
     containers.podman.podman_image:
       name: "{{ appName}}"
       build:
-        extra_args: "--build-arg sshpubkey=\"{{ PUBKEY | replace('"', '\\"') }}\""
+        extra_args: "--build-arg 'sshpubkey={{ PUBKEY }}'"
         file: "Containerfile"
       path: "/tmp/bootc/{{ path }}"
       push: true
