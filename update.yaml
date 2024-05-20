@@ -3,6 +3,12 @@
   become: true
   gather_facts: true
   tasks:
-  - name: trigger bootc upgrade if image was updated
-    command: "bootc upgrade --apply"
-    ignore_errors: true
+  - name: Upgrade bootc
+    bootc_upgrade:
+      apply: true
+    register: result
+
+  - name: Reboot the system
+    ansible.builtin.reboot:
+    when: result.changed
+
