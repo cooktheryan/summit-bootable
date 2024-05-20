@@ -1,14 +1,12 @@
----
 - hosts: 50.16.55.163
   become: true
   gather_facts: true
   tasks:
   - name: Upgrade bootc
-    cooktheryan.bootc_upgrade:
+    cooktheryan.bootc.bootc_upgrade:
       apply: true
     register: result
 
   - name: Reboot the system
     ansible.builtin.reboot:
     when: result.changed
-
