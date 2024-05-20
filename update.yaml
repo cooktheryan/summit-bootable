@@ -1,5 +1,5 @@
 ---
-- hosts: 54.236.49.68
+- hosts: 50.16.55.163
   become: true
   gather_facts: true
   tasks:
